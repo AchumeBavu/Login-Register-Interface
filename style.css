@@ -1,0 +1,143 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?fit=crop&w=1920&q=80') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 350px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 90%;
+  position: center;
+  padding: 12px 40px 12px 15px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  outline: none;
+}
+
+.input-group .icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 18px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+}
+
+.options a {
+  color: #ffffffaa;
+  text-decoration: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: white;
+  text-decoration: underline;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  margin: 0 5px;
+  transition: background 0.3s;
+}
+
+.tab-buttons button.active {
+  background: white;
+  color: black;
+}
+
+
+   body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    #logout {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  

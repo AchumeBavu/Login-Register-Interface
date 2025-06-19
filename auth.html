@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="tab-buttons">
+      <button id="loginTab" class="active">Login</button>
+      <button id="registerTab">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm">
+      <h2>Login</h2>
+      <div class="input-group">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <span class="icon">👤</span>
+      </div>
+      <div class="input-group">
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <span class="icon">🔒</span>
+      </div>
+      <div class="options">
+        <label><input type="checkbox"> Remember me</label>
+        <a href="#">Forgot Password?</a>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" style="display: none;">
+      <h2>Register</h2>
+      <div class="input-group">
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <span class="icon">📧</span>
+      </div>
+      <div class="input-group">
+        <input type="password" id="registerPassword" placeholder="Password" required>
+        <span class="icon">🔒</span>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <span class="icon">✅</span>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDm6AqTNvCJIVrDEWIkpPACdAtnMugpP58",
+            authDomain: "googleapis.com",
+            projectId: "mechanicfinderapp-3a7e4",
+            storageBucket: "googleapis.com",
+            messagingSenderId: "105484801007744869819",
+            appId: "7707eab8cef451d75a741c940bd78195fd5b0dc8"
+        
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // TAB SWITCHING
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+
+    loginTab.onclick = () => {
+      loginForm.style.display = "block";
+      registerForm.style.display = "none";
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+    };
+
+    registerTab.onclick = () => {
+      loginForm.style.display = "none";
+      registerForm.style.display = "block";
+      loginTab.classList.remove("active");
+      registerTab.classList.add("active");
+    };
+
+    // LOGIN
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Logged in!");
+          window.location.href = "map.html";
+        })
+        .catch(err => alert(err.message));
+    });
+
+    // REGISTER
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Registered successfully!");
+          loginTab.click(); // switch to login view
+        })
+        .catch(err => alert(err.message));
+    });
+  </script>
+</body>
+</html>

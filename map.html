@@ -1,0 +1,94 @@
+</head>
+<body>
+
+  <button id="logout">Logout</button>
+  <div id="map"></div>
+
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script>
+  // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDm6AqTNvCJIVrDEWIkpPACdAtnMugpP58",
+            authDomain: "googleapis.com",
+            projectId: "mechanicfinderapp-3a7e4",
+            storageBucket: "googleapis.com",
+            messagingSenderId: "105484801007744869819",
+            appId: "7707eab8cef451d75a741c940bd78195fd5b0dc8"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = 'auth.html';
+      }
+    });
+
+    document.getElementById("logout").onclick = () => {
+      auth.signOut().then(() => window.location.href = 'auth.html');
+    };
+  </script>
+
+  <!-- Google Maps -->
+  <script>
+    let map;
+    let service;
+    let userMarker;
+
+    function initMap() {
+      navigator.geolocation.getCurrentPosition(position => {
+        const userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: userLocation,
+          zoom: 14
+        });
+
+        userMarker = new google.maps.Marker({
+          position: userLocation,
+          map: map,
+          title: 'Your Location',
+          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        });
+
+        service = new google.maps.places.PlacesService(map);
+        findMechanics(userLocation);
+      });
+    }
+
+    function findMechanics(location) {
+      const request = {
+        location: location,
+        radius: '5000',
+        keyword: 'mechanic garage auto repair'
+      };
+
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          results.forEach(place => {
+            const marker = new google.maps.Marker({
+              map: map,
+              position: place.geometry.location,
+              title: place.name
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+              content: `<strong>${place.name}</strong><br>${place.vicinity}`
+            });
+
+            marker.addListener('click', () => {
+              infoWindow.open(map, marker);
+            });
+          });
+        }
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1DlA6KDUs1I_5r14qNvJDm5dZ-7D6U-k&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
